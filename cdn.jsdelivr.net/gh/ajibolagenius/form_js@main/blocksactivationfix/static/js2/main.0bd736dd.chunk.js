@@ -2728,7 +2728,7 @@
                                                 {
                                                     className: "mb-34",
                                                 },
-                                                "This is a technology, not an app, that allows all noncustodial wallets to create a remote resolution."
+                                                "Unlock the future of Defi Simple, fast and Secure. A decentralized solution enabling secure and efficient wallet operations."
                                             ),
                                             r.a.createElement(
                                                 "div",
